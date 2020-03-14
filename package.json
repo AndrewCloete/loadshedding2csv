@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "eskom-loadshedding-api": "^0.1.4"
+    "eskom-loadshedding-api": "^0.1.4",
+    "moment": "^2.24.0"
   }
 }
