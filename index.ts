@@ -18,27 +18,36 @@ async function search() {
 }
 
 
-async function generateCSV(stage: LoadsheddingStage,subID: number, tzm: number, daylimit: number) {
+async function generateCSV(alias: string, stage: LoadsheddingStage,subID: number, tzm: number) {
     
     let sched: LoadsheddingSchedule = await Schedule.getSchedule(subID, stage)
-    let limitedShed = sched.schedule.slice(daylimit - 1)
 
     // Flatten the schedule
-    let slotsUTC = limitedShed.map(s => s.times).reduce((acc, val) => acc.concat(val), [])
+    let slotsUTC = sched.schedule.map(s => s.times).reduce((acc, val) => acc.concat(val), [])
 
+    // Serialize to CSV
     console.log("Subject,StartDate,StartTime,EndDate,EndTime,AllDayEvent,Location,Description")
     for (let s of slotsUTC) {
         let start = moment(s.startTime).utcOffset(tzm)
         let end = moment(s.endTime).utcOffset(tzm)
-        console.log(`${stage},${start.format("MM/DD/YY")},${start.format("HH:mm")},${end.format("MM/DD/YY")},${end.format("HH:mm")},FALSE,,loadshedding`)
+        console.log(`Stage ${stage},${start.format("MM/DD/YY")},${start.format("HH:mm")},${end.format("MM/DD/YY")},${end.format("HH:mm")},FALSE, ${alias} stage ${stage},loadshedding`)
     }
-
-
 }
 
-const STAGE = LoadsheddingStage.STAGE_2
+
+
+// ===== main =====
+const ALIAS = 'Home'
 const SUBURB_ID = 1061733 // ... get the suburb ID by running the search function
 const TZ_OFFSET_MINUTES = 120
-const DAY_LIMIT = 2
 
-generateCSV(STAGE, SUBURB_ID, TZ_OFFSET_MINUTES, DAY_LIMIT)
+if (process.argv.length != 3) {
+    console.log("Usage:\n\tnode dist/index.js 2 > /tmp/stage2.csv")
+}
+
+const STAGE = parseInt(process.argv[2])
+if (!STAGE) {
+    console.log(`${process.argv[2]} is an invalid stage`)
+}
+
+generateCSV(ALIAS, STAGE, SUBURB_ID, TZ_OFFSET_MINUTES)
