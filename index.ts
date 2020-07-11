@@ -1,22 +1,23 @@
 import { LoadsheddingStage, Status, LoadsheddingSchedule, Schedule, Search, Province, Municipality, Suburb } from 'eskom-loadshedding-api';
 import moment from 'moment';
 
+require('tls').DEFAULT_MIN_VERSION = 'TLSv1'
+
 async function printStatus() {
     let status: LoadsheddingStage = await Status.getStatus()
     console.log('Current status: ', status)
-} 
+}
 
-// Run this function to find your suburb ID
 async function search() {
-    // Search municipalities
-    let municipalities: Municipality[] = await Search.getMunicipalities(Province.WESTERN_CAPE)
+    // Search municipalities in province
+    let PROVINCE = Province.FREE_STATE
+    let municipalities: Municipality[] = await Search.getMunicipalities(PROVINCE)
     console.log(municipalities)
 
     // Search suburb within municipality
-    let suburbs: Suburb[] = await Search.getMunicipalitySuburbs(10257, 'Lyn')
+    let suburbs: Suburb[] = await Search.getMunicipalitySuburbs(144, 'Donker')
     console.log(suburbs)
 }
-
 
 async function generateCSV(alias: string, stage: LoadsheddingStage,subID: number, tzm: number) {
     
@@ -37,8 +38,8 @@ async function generateCSV(alias: string, stage: LoadsheddingStage,subID: number
 
 
 // ===== main =====
-const ALIAS = 'Home'
-const SUBURB_ID = 1061733 // ... get the suburb ID by running the search function
+const ALIAS = 'Gariep'
+const SUBURB_ID = 11797 // ... get the suburb ID by running the search function
 const TZ_OFFSET_MINUTES = 120
 
 if (process.argv.length != 3) {
