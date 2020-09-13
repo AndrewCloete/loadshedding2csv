@@ -8,14 +8,14 @@ async function printStatus() {
     console.log('Current status: ', status)
 }
 
-async function search() {
+async function searchMunicipalities(province: Province) {
     // Search municipalities in province
-    let PROVINCE = Province.FREE_STATE
-    let municipalities: Municipality[] = await Search.getMunicipalities(PROVINCE)
+    let municipalities: Municipality[] = await Search.getMunicipalities(province)
     console.log(municipalities)
-
+}
+async function searchSuburb(municipalityID: number, searchString: string) {
     // Search suburb within municipality
-    let suburbs: Suburb[] = await Search.getMunicipalitySuburbs(144, 'Donker')
+    let suburbs: Suburb[] = await Search.getMunicipalitySuburbs(municipalityID, searchString)
     console.log(suburbs)
 }
 
@@ -36,10 +36,15 @@ async function generateCSV(alias: string, stage: LoadsheddingStage,subID: number
 }
 
 
+// ===== search =====
+// searchMunicipalities(Province.WESTERN_CAPE).then(() => process.exit(0))
+// searchSuburb(144, 'Donker').then(() => process.exit(0))
+// searchSuburb(356, 'Lyn').then(() => process.exit(0))
+
 
 // ===== main =====
-const ALIAS = 'Gariep'
-const SUBURB_ID = 11797 // ... get the suburb ID by running the search function
+const ALIAS = 'Lyndoch'
+const SUBURB_ID = 67585 // ... get the suburb ID by running the search function
 const TZ_OFFSET_MINUTES = 120
 
 if (process.argv.length != 3) {
@@ -51,4 +56,14 @@ if (!STAGE) {
     console.log(`${process.argv[2]} is an invalid stage`)
 }
 
-generateCSV(ALIAS, STAGE, SUBURB_ID, TZ_OFFSET_MINUTES)
+generateCSV(ALIAS, STAGE, SUBURB_ID, TZ_OFFSET_MINUTES).then(() => process.exit(0))
+
+
+/* REF
+const ALIAS = 'Gariep'
+const SUBURB_ID = 11797
+
+const ALIAS = 'Lyndoch'
+const SUBURB_ID = 1061733
+
+*/
