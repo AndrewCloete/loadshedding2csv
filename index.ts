@@ -1,3 +1,5 @@
+declare var require: any
+
 import { LoadsheddingStage, Status, LoadsheddingSchedule, Schedule, Search, Province, Municipality, Suburb } from 'eskom-loadshedding-api';
 import moment from 'moment';
 
@@ -19,7 +21,7 @@ async function searchSuburb(municipalityID: number, searchString: string) {
     console.log(suburbs)
 }
 
-async function generateCSV(alias: string, stage: LoadsheddingStage,subID: number, tzm: number) {
+async function generateCSV(alias: string, stage: LoadsheddingStage, subID: number, tzm: number) {
     
     let sched: LoadsheddingSchedule = await Schedule.getSchedule(subID, stage)
 
@@ -39,12 +41,12 @@ async function generateCSV(alias: string, stage: LoadsheddingStage,subID: number
 // ===== search =====
 // searchMunicipalities(Province.WESTERN_CAPE).then(() => process.exit(0))
 // searchSuburb(144, 'Donker').then(() => process.exit(0))
-// searchSuburb(356, 'Lyn').then(() => process.exit(0))
+// searchSuburb(356, 'Cloetes').then(() => process.exit(0))
 
 
 // ===== main =====
-const ALIAS = 'Lyndoch'
-const SUBURB_ID = 67585 // ... get the suburb ID by running the search function
+const ALIAS = 'Cloetesville'
+const SUBURB_ID = 67527 // ... get the suburb ID by running the search function
 const TZ_OFFSET_MINUTES = 120
 
 if (process.argv.length != 3) {

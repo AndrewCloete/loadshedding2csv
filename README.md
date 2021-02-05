@@ -10,10 +10,17 @@ Node, Typescript, Python with Pandas
 - Compile `tsc`
 - Run `node dist/index.js`
 
-Example usage: 
-- `node dist/index.js 1 > /tmp/shed/stage1.csv`
-- `node dist/index.js 2 > /tmp/shed/stage2.csv`
-- `node dist/index.js 3 > /tmp/shed/stage3.csv`
-- ... as many stages as you require
-- Merge stages `python merge.py /tmp/shed combined`
-- Import `/tmp/shed/combined.csv` to Google Calendar
+Example usage:
+```sh
+mkdir /tmp/shed
+
+for stage in 1 2 3 4 # ... as many stages as you require
+do
+    node dist/index.js ${stage} > /tmp/shed/stage${stage}.csv
+done
+
+# Combine the results into a single CSV
+python merge.py /tmp/shed combined
+```
+
+Finally create a new calendar in Google Calendar, then import the CSV to it `/tmp/shed/combined.csv`.
