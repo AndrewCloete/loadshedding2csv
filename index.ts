@@ -45,8 +45,18 @@ async function generateCSV(alias: string, stage: LoadsheddingStage, subID: numbe
 
 
 // ===== main =====
-const ALIAS = 'Cloetesville'
-const SUBURB_ID = 67527 // ... get the suburb ID by running the search function
+// ... get the suburb ID by running the search function
+
+const ALIAS = 'Gariep'
+const SUBURB_ID = 1064054
+
+// const ALIAS = 'Lyndoch'
+// const SUBURB_ID = 1061733
+
+// const ALIAS = 'Cloetesville'
+// const SUBURB_ID = 1061674 
+
+
 const TZ_OFFSET_MINUTES = 120
 
 if (process.argv.length != 3) {
@@ -61,11 +71,3 @@ if (!STAGE) {
 generateCSV(ALIAS, STAGE, SUBURB_ID, TZ_OFFSET_MINUTES).then(() => process.exit(0))
 
 
-/* REF
-const ALIAS = 'Gariep'
-const SUBURB_ID = 11797
-
-const ALIAS = 'Lyndoch'
-const SUBURB_ID = 1061733
-
-*/

@@ -10,7 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^14.14.25",
+<<<<<<< HEAD
     "eskom-loadshedding-api": "^0.1.5",
     "moment": "^2.29.2"
+=======
+    "axios": "^0.24.0",
+    "eskom-loadshedding-api": "file:../eskom-loadshedding-api",
+    "moment": "^2.29.1"
+>>>>>>> 24f9f9c (Adds quick)
   }
 }
